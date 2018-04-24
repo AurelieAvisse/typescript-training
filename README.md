@@ -18,7 +18,7 @@ development run (compile & test initially + for each file change, useful for dev
 
     npm test
 
-## running single tests
+## running single test
 
 You can temporarily adapt jasmine tests to run *only few specific tests* (one
 or more) to save time, not to execute all the tests you have. In order to do
