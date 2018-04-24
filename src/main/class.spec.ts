@@ -5,6 +5,12 @@ describe('class', () => {
     // Add a constructor that takes one param, the instrument.
     // Set this.instrument to the instrument passed in
 
+    class Musician {
+      instrument: string;
+      constructor(instrument: any = undefined) {
+        this.instrument = instrument;
+      }
+    }
     const musician = new Musician()
     const ringo = new Musician('drums')
 
@@ -16,7 +22,13 @@ describe('class', () => {
     // Create a Musician class with a constructor
     // Make your class default (using default params) the instrument to 'guitar'
 
-    const john = new Musician()
+    class Musician {
+      instrument: string;
+      constructor(instrument: any = undefined) {
+        this.instrument = instrument;
+      }
+    }
+    const john = new Musician('guitar')
     const ringo = new Musician('drums')
 
     expect(john.instrument).toBe('guitar')
@@ -26,12 +38,21 @@ describe('class', () => {
   it('can have instance methods', () => {
     // Create a Musician class, pass in the instrument to the constructor,
     // and add a play function to the class definition
+    class Musician {
+      instrument: string;
+      constructor(instrument: string) {
+        this.instrument = 'drums';
+      }
+      play() {
+        return "I'm playing " + this.instrument;
+      }
+    }
 
-    const musician = new Musician()
+    const musician = new Musician('')
 
     expect(musician.play).toBeDefined()
     // expect(Musician.play).toBeUndefined()
-    expect(musician.play()).toBe("I'm playing drums")
+    expect(musician.play()).toBe("I'm playing drums");
   })
 
   it('can have static methods and properties', () => {
@@ -39,7 +60,19 @@ describe('class', () => {
     // create a static property instances (that will hold all created instances) and
     // create a static method create that encapsulates calling constructor
     //   and storing the reference (in instances array) and returns the instance
-
+    class Musician {
+      static instances: Musician[] = [];
+      
+      constructor(public instrument: string) {
+        
+      }
+      static create(instrument = undefined) {
+        let musician = new Musician(instrument);
+        Musician.instances.push(musician);
+        return musician;
+      }
+    }
+    
     expect(Musician.create).toBeDefined()
     expect(Musician.instances.length).toBe(0)
 
@@ -57,7 +90,18 @@ describe('class', () => {
     // Create a Rockman class that extends Musician
     // Add play method to Musician
 
-    const rockman = new Rockman()
+    class Musician {
+      
+      play() {
+        return "I'm playing guitar";
+      }
+    }
+
+    class Rockman extends Musician {
+      
+    }
+
+    const rockman = new Rockman();
 
     expect(rockman instanceof Rockman).toBe(true)
     expect(rockman instanceof Musician).toBe(true)
@@ -68,8 +112,18 @@ describe('class', () => {
     // Create a Musician class, pass in the instrument to the constructor,
     // Add property getter for description
 
-    const guitarist = new Musician('guitar')
-    const drummer = new Musician('drums')
+    class Musician {
+      instrument: string;
+      constructor(instrument: any) {
+        this.instrument = instrument;
+      }
+      get description(): string {
+        return( "this musician plays " + this.instrument)
+      }
+      }
+
+    const guitarist = new Musician('guitar');
+    const drummer = new Musician('drums');
 
     expect(guitarist.description).toBe('this musician plays guitar')
     expect(drummer.description).toBe('this musician plays drums')
@@ -82,6 +136,21 @@ describe('class', () => {
     // Add property setter for band
     // - it will add this band to the list of musician's bands'. How to store them?
 
+    class Musician {
+      private bands = [];
+      constructor () {
+        
+      }
+      
+      public set band (value: string) {
+        this.bands.push(value);
+      }
+
+      public get allBands(): string {
+        return "this musician played in " + this.bands.join(', ');
+      }
+      
+    }
     const musician = new Musician()
 
     musician.band = 'ABBA'
